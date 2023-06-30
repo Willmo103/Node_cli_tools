@@ -1,5 +1,7 @@
 import * as fs from 'fs';
 import sharp from 'sharp';
+import * as path from 'path';
+
 const extensions: string[] = ['jpg', 'png', 'gif', 'jpeg', 'bmp', 'webp', 'nef'];
 const settingsJson = fs.readFileSync('settings.json', 'utf8');
 
@@ -63,4 +65,45 @@ function printHelp() {
     console.log('Options:');
     console.log('--add-ext: Add the extension to the thumbnail file name');
     console.log('--recursive: Create thumbnails for all images in subdirectories');
+}
+
+class Settings {
+    settingsPath: string
+    settingsJson: string
+    settings: any
+
+    constructor() {
+        this.settingsPath = path.join(__dirname, 'settings.json')
+        if (!fs.existsSync(this.settingsPath)) {
+            console.log('No settings.json file found\nWriting default settings.json file');
+            try {
+                fs.writeFileSync(this.settingsPath, JSON.stringify({ settings: { extensions: ['jpg', 'png', 'gif', 'jpeg', 'bmp', 'webp', 'nef'] } }));
+            } catch (err) {
+                console.log('Error writing default settings.json file');
+                console.log(err);
+                process.exit(1);
+            }
+        }
+        this.settingsJson = fs.readFileSync(this.settingsPath, 'utf8');
+        this.settings = JSON.parse(this.settingsJson);
+    }
+
+    getExtensions(): string[] {
+        return this.settings.extensions;
+    }
+
+    addExtension(ext: string): void {
+        this.settings.extensions.push(ext);
+        this.saveSettings();
+    }
+
+    saveSettings(): void {
+        try {
+            fs.writeFileSync(this.settingsPath, JSON.stringify({ settings: this.settings }));
+        } catch (err) {
+            console.log('Error saving settings.json file');
+            console.log(err);
+            process.exit(1);
+        }
+    }
 }
