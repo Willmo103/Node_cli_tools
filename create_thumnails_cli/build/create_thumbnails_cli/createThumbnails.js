@@ -73,6 +73,7 @@ var createThumbnail = (imagePath) => {
     (0, sharp_1.default)(imagePath).resize(200, 200).toBuffer().then(data => {
         return data ? typeof Buffer : null;
     }).catch(err => {
+        console.log('Error creating thumbnail:');
         console.log(err);
     });
     return null;

@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import sharp from 'sharp';
 const extensions: string[] = ['jpg', 'png', 'gif', 'jpeg', 'bmp', 'webp', 'nef'];
+const settingsJson = fs.readFileSync('settings.json', 'utf8');
 
 // parse the root directory from the command line
 const rootDir = process.argv[2];
@@ -51,6 +52,7 @@ var createThumbnail = (imagePath: string): Buffer | null => {
     sharp(imagePath).resize(200, 200).toBuffer().then(data => {
         return data ? typeof Buffer : null;
     }).catch(err => {
+        console.log('Error creating thumbnail:')
         console.log(err);
     })
     return null;
