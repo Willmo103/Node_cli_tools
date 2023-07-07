@@ -28,7 +28,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = __importStar(require("fs"));
 const sharp_1 = __importDefault(require("sharp"));
+const path = __importStar(require("path"));
 const extensions = ['jpg', 'png', 'gif', 'jpeg', 'bmp', 'webp', 'nef'];
+const settingsJson = fs.readFileSync('settings.json', 'utf8');
 // parse the root directory from the command line
 const rootDir = process.argv[2];
 if (!rootDir) {
@@ -73,6 +75,7 @@ var createThumbnail = (imagePath) => {
     (0, sharp_1.default)(imagePath).resize(200, 200).toBuffer().then(data => {
         return data ? typeof Buffer : null;
     }).catch(err => {
+        console.log('Error creating thumbnail:');
         console.log(err);
     });
     return null;
@@ -82,4 +85,39 @@ function printHelp() {
     console.log('Options:');
     console.log('--add-ext: Add the extension to the thumbnail file name');
     console.log('--recursive: Create thumbnails for all images in subdirectories');
+}
+class Settings {
+    constructor() {
+        this.settingsPath = path.join(__dirname, 'settings.json');
+        if (!fs.existsSync(this.settingsPath)) {
+            console.log('No settings.json file found\nWriting default settings.json file');
+            try {
+                fs.writeFileSync(this.settingsPath, JSON.stringify({ settings: { extensions: ['jpg', 'png', 'gif', 'jpeg', 'bmp', 'webp', 'nef'] } }));
+            }
+            catch (err) {
+                console.log('Error writing default settings.json file');
+                console.log(err);
+                process.exit(1);
+            }
+        }
+        this.settingsJson = fs.readFileSync(this.settingsPath, 'utf8');
+        this.settings = JSON.parse(this.settingsJson);
+    }
+    getExtensions() {
+        return this.settings.extensions;
+    }
+    addExtension(ext) {
+        this.settings.extensions.push(ext);
+        this.saveSettings();
+    }
+    saveSettings() {
+        try {
+            fs.writeFileSync(this.settingsPath, JSON.stringify({ settings: this.settings }));
+        }
+        catch (err) {
+            console.log('Error saving settings.json file');
+            console.log(err);
+            process.exit(1);
+        }
+    }
 }
