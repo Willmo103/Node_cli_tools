@@ -1,34 +1,58 @@
-# *Project: Image Thumbnail Generator
+# Image Thumbnail Generator
 
-## Description
+This script is an Image Thumbnail Generator that creates thumbnails for images in a given directory. It is written in Node.js and utilizes the 'sharp' module for image processing, and 'fs' module for file system operations.
 
-Create a command-line application that generates thumbnail images for a given directory of images.
-The application will read images from the source directory, resize them to a specified thumbnail
-size, and save the thumbnail images in a separate destination directory. This can be useful for
-generating smaller versions of images for web applications or galleries.
+## Getting Started
 
-## Features
+These instructions will guide you through the process of setting up and running this script on your local machine.
 
-1) Scan a source directory and identify image files.
-2) Resize images to a specified thumbnail size while maintaining the aspect ratio.
-3) Save the resized thumbnail images to a destination directory.
-4) Support customization of thumbnail size through command-line arguments or configuration files.
-5) Provide progress updates and error handling during the thumbnail generation process.
-6) Handle different image file formats (e.g., JPEG, PNG) using appropriate libraries or modules.
+### Prerequisites
 
-## Technologies
+- Node.js (<https://nodejs.org/>)
+- NPM (<https://www.npmjs.com/get-npm>)
+- Sharp module (<https://sharp.pixelplumbing.com/install>)
 
-- Node.js
-- File System (fs module)
-- Image Processing Libraries (such as sharp, gm, or jimp)
-- Asynchronous programming (Promises, async/await)
+### Installation
 
-Here are some suggested tasks to get started:
+- Install Node.js and NPM following their respective documentation.
+- Clone or download the script onto your local machine.
+- Navigate to the script's directory in your terminal.
+- Install the 'sharp' package by running:
 
-1) Set up the project structure, including directories for source images and destination thumbnails.
-2) Implement a function to scan the source directory and identify image files.
-3) Choose an image processing library and install it as a dependency.
-4) Write a function to resize images to the specified thumbnail size using the chosen library.
-5) Create destination directories for the thumbnails.
-6) Implement a function to generate thumbnail images from the source images and save them in the destination directories.
-7) Add support for customizing the thumbnail size through command-line arguments or configuration files.
+```sh
+npm install sharp
+```
+
+### Usage
+
+The script takes one required argument and one optional argument.
+
+- Required: `<rootDir>` - The directory containing the images you wish to create thumbnails for. The thumbnails will be saved to a 'thumbnails' directory within this directory.
+
+- Optional: `--size <width:height>` - Allows you to specify the dimensions of the thumbnails. If not specified, the default size is 200x200.
+
+Run the script using the following command:
+
+```sh
+node index.js <rootDir> [--size <width:height>]
+```
+
+For example:
+
+```sh
+node index.js /path/to/images --size 400:300
+```
+
+### Notes
+
+- The script supports images with 'jpg', 'png', 'gif', 'jpeg', 'bmp', 'webp', 'nef' file extensions.
+- Existing thumbnails are not overwritten. Delete a thumbnail manually if you want to regenerate it.
+- Errors during the thumbnail creation process are logged to the console.
+
+## Contributing
+
+Please feel free to submit pull requests or open issues to improve the script.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

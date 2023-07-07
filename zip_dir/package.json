@@ -6,9 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "bin": "./build/zip_dir.js",
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "sparx188",
+  "license": "MIT",
   "dependencies": {
     "archiver": "^5.3.1",
     "commander": "^11.0.0"

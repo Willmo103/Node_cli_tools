@@ -1,12 +1,17 @@
 {
-  "name": "thumbnail_generator",
-  "version": "1.0.0",
+  "name": "@sparx188/thumbnail_generator",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "compile": "npm tsc --watch"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Willmo103/Node_cli_tools.git"
+  },
+  "bin": "./build/createThumbnails.js",
   "keywords": [],
   "author": "",
   "license": "ISC",
